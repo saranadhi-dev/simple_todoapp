@@ -26,7 +26,7 @@ class Todotile extends StatelessWidget {
             SlidableAction(
               onPressed: onDelete,
               icon: (Icons.delete),
-              backgroundColor: Colors.red,
+              backgroundColor: Theme.of(context).colorScheme.secondary,
               borderRadius: BorderRadius.circular(12),
             ),
           ],
@@ -35,14 +35,14 @@ class Todotile extends StatelessWidget {
           padding: EdgeInsets.all(12.0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
-            color: Colors.black38,
+            color: Theme.of(context).colorScheme.primary,
           ),
           child: Row(
             children: [
               Checkbox(
                 value: isCompleted,
                 onChanged: onChange,
-                activeColor: Colors.black,
+                activeColor: Theme.of(context).colorScheme.secondary,
               ),
               Text(
                 task,

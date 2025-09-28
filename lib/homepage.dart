@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:provider/provider.dart';
 import 'package:todoapp/database.dart';
+import 'package:todoapp/theme.dart';
+import 'package:todoapp/themeProvider.dart';
 import 'package:todoapp/todotile.dart';
 
 class Homepage extends StatefulWidget {
@@ -48,7 +51,7 @@ class _HomepageState extends State<Homepage> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
           shape: BoxBorder.all(),
           content: Container(
             height: 125,
@@ -69,12 +72,12 @@ class _HomepageState extends State<Homepage> {
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      color: Colors.blueGrey,
+                      color: Theme.of(context).colorScheme.primary,
                       child: Text("Cancel"),
                     ),
                     MaterialButton(
                       onPressed: addTodo,
-                      color: Colors.blueGrey,
+                      color: Theme.of(context).colorScheme.primary,
                       child: Text("Save"),
                     ),
                   ],
@@ -97,17 +100,25 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).colorScheme.background,
       appBar: AppBar(
         title: Text("T O D O"),
         centerTitle: true,
         elevation: 0,
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.refresh))],
+        actions: [
+          IconButton(onPressed: () {}, icon: Icon(Icons.refresh)),
+          IconButton(
+            onPressed: () {
+              Provider.of<Themeprovider>(context,listen: false).toggleTheme();
+            },
+            icon: Icon(Provider.of<Themeprovider>(context,listen: false).themeData ==lightMode ?  Icons.toggle_off: Icons.toggle_on,size: 32,),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: createNewTask,
-        backgroundColor: Colors.black54,
-        child: const Icon(Icons.add, color: Colors.black54),
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        child: Icon(Icons.add, color: Theme.of(context).colorScheme.primary),
       ),
       body: ListView.builder(
         itemCount: db.list.length,
